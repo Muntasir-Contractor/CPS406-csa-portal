@@ -1,28 +1,66 @@
-.Navbar{
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  background-color: #FFDE63;
-  margin-top: 0px;
-  margin: 0;
-  padding: 20px 5% 20px 2%;
-  height: 75px;
-  align-items: center;
-  position: fixed;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.nav_links{
-  font-size: 20px;
-  list-style: None;
-  margin-left: 880px;
-  margin-top: 0;
+.Navbar {
   display: flex;
-  gap: 70px;
-  padding: 0px;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 0 40px;
+  background-color: #FFDE63;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.nav_logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.3px;
+  text-decoration: none;
+}
+
+.nav_links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .nav_links li a {
-  color: black;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+  background-color: #1a1a1a;
+  color: #FFDE63;
+  padding: 8px 18px;
 }
 
+.nav_links li a:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.nav_links li:last-child a {
+  background-color: #1a1a1a;
+  color: #FFDE63;
+  padding: 8px 18px;
+}
+
+.nav_links li:last-child a:hover {
+  background-color: #333;
+}
