@@ -1,0 +1,26 @@
+Quite a few of you have applied for, and some have even been admitted to, the co-op program. To help
+your lazy co-op coordinator (please note that I’m not referring to an actual person here), a new co-op
+support application is needed with two main functions.
+
+First, it should allow the applicants to apply for provisional acceptance by supplying name, student id,
+and email address. The co-op coordinator will then review all applications, check the requirements, and
+provisionally accept or reject applicants as appropriate. At some later date, the requirements will be
+checked again, and final decision about the acceptance will be made.
+
+Second, successful applicants should be able to log in and submit your report for the work term they’ve
+just finished. Again, some log in credentials should be supplied. The report should be in the form of a
+PDF file; the system may offer a suitable template to help you do it. There should be a deadline for doing
+that, depending on the actual dates of the work term.
+
+Moreover, your supervisor from work should provide the so-called employer evaluation of your
+behavior, skills, knowledge, and attitude during the work term. This can be done by filling in a paper
+version of the report and scanning it to a PDF which is then submitted (most companies have the
+necessary facilities). Alternatively, an online form containing that same information can be filled in.
+Either way, your work supervisor should be able to create an account and log in to it before submitting
+the evaluation or filling in the online form.
+
+Reporting should include listing the applicants, listing those accepted or rejected for both provisional
+and final acceptance, listing the students with and without reports and/or evaluations submitted, and
+perhaps the facility for sending email reminders to those who have not submitted their reports on time.
+For added fun, consider that some people may actually get rejected from their co-op assignments, and
+develop facilities to keep track of that. Feel free to devise your own approach to handling this situation.
