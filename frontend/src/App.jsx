@@ -4,18 +4,40 @@ import './App.css'
 import StudentLogin from './pages/StudentLogin'
 import CoordinatorLogin from './pages/CoordinatorLogin'
 import EmployerLogin from './pages/EmployerLogin'
+import CheckStatus from './pages/CheckStatus'
 
 function Home() {
-  const [form, setForm] = useState({ name: '', studentId: '', email: '' })
+  const [form, setForm] = useState({ name: '', studentId: '', email: '', password: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setSubmitted(true)
+    setError('')
+    try {
+      const res = await fetch('http://localhost:8000/studentapplication', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          student_name: form.name,
+          student_id: form.studentId,
+          email_address: form.email,
+          password: form.password,
+        }),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        setError(data.detail || 'Submission failed. Please try again.')
+        return
+      }
+      setSubmitted(true)
+    } catch {
+      setError('Could not reach the server. Please try again later.')
+    }
   }
 
   return (
@@ -28,7 +50,8 @@ function Home() {
             <p><strong>Name:</strong> {form.name}</p>
             <p><strong>Student ID:</strong> {form.studentId}</p>
             <p><strong>Email:</strong> {form.email}</p>
-            <button className="btn-secondary" onClick={() => setSubmitted(false)}>Submit another</button>
+            <p>You can check your application status using your Student ID and password.</p>
+            <button className="btn-secondary" onClick={() => { setSubmitted(false); setForm({ name: '', studentId: '', email: '', password: '' }) }}>Submit another</button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="submission-form">
@@ -70,6 +93,19 @@ function Home() {
               required
             />
 
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Create a password to check your status later"
+              value={form.password}
+              onChange={handleChange}
+              minLength={6}
+              required
+            />
+
+            {error && <span className="field-error">{error}</span>}
             <button type="submit" className="btn-primary">Submit</button>
           </form>
         )}
@@ -92,6 +128,9 @@ function App() {
           <li>
             <Link to="/employer-login">Employer Login</Link>
           </li>
+          <li>
+            <Link to="/check-status">Check Application Status</Link>
+          </li>
         </ul>
       </div>
 
@@ -100,6 +139,7 @@ function App() {
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/coordinator-login" element={<CoordinatorLogin />} />
         <Route path="/employer-login" element={<EmployerLogin />} />
+        <Route path="/check-status" element={<CheckStatus />} />
       </Routes>
     </BrowserRouter>
   )

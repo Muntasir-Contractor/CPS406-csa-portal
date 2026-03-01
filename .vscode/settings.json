@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "backend\\db\\csa.db",
+            "name": "csadb"
+        }
+    ]
+}
