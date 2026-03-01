@@ -28,7 +28,7 @@ def get_application_status(student_id, password):
     conn = sqlite3.connect(CONN)
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT password, status FROM student_application WHERE student_id = ?",
+        "SELECT password, status, submitted_at, status_updated_at FROM student_application WHERE student_id = ?",
         (student_id,)
     )
     row = cursor.fetchone()
@@ -36,13 +36,13 @@ def get_application_status(student_id, password):
     conn.close()
     if row is None or not verify_password(password, row[0]):
         return None
-    return row[1]
+    return {"status": row[1], "submitted_at": row[2], "status_updated_at": row[3]}
 
 def update_student_application_status(student_id, new_status):
     conn = sqlite3.connect(CONN)
     cursor = conn.cursor()
     cursor.execute(
-        "UPDATE student_application SET status = ? WHERE student_id = ?",
+        "UPDATE student_application SET status = ?, status_updated_at = datetime('now') WHERE student_id = ?",
         (new_status, student_id)
     )
     conn.commit()

@@ -32,7 +32,7 @@ function CheckStatus() {
       if (!res.ok) {
         setError(data.detail || 'Could not find your application.')
       } else {
-        setResult(data.status)
+        setResult(data)
       }
     } catch {
       setError('Could not reach the server. Please try again later.')
@@ -41,7 +41,12 @@ function CheckStatus() {
     }
   }
 
-  const statusInfo = result ? (STATUS_STYLES[result] ?? { label: result, className: '' }) : null
+  const statusInfo = result ? (STATUS_STYLES[result.status] ?? { label: result.status, className: '' }) : null
+
+  function formatDate(isoStr) {
+    if (!isoStr) return '—'
+    return new Date(isoStr + 'Z').toLocaleString()
+  }
 
   return (
     <div className="page">
@@ -53,6 +58,8 @@ function CheckStatus() {
             <p className={statusInfo.className} style={{ fontSize: '1.3rem', fontWeight: 'bold', marginTop: '0.5rem' }}>
               {statusInfo.label}
             </p>
+            <p style={{ marginTop: '0.75rem' }}><strong>Submitted:</strong> {formatDate(result.submitted_at)}</p>
+            <p><strong>Status last updated:</strong> {formatDate(result.status_updated_at)}</p>
             <button className="btn-secondary" onClick={() => { setResult(null); setForm({ studentId: '', password: '' }) }}>
               Go Back
             </button>

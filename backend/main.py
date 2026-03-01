@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import sqlite3
 import dbfuncs
+import uvicorn
 
 app = FastAPI()
 origins = [
@@ -42,7 +43,7 @@ def student_application(data: SubmissionApplication):
 
 @app.post("/studentapplication/status")
 def check_application_status(data: StatusCheck):
-    status = dbfuncs.get_application_status(data.student_id, data.password)
-    if status is None:
+    result = dbfuncs.get_application_status(data.student_id, data.password)
+    if result is None:
         raise HTTPException(status_code=404, detail="No application found for the provided student ID and password")
-    return {"student_id": data.student_id, "status": status}
+    return {"student_id": data.student_id, **result}
