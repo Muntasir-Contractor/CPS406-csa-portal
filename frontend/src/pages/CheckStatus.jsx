@@ -54,7 +54,7 @@ function CheckStatus() {
               {statusInfo.label}
             </p>
             <button className="btn-secondary" onClick={() => { setResult(null); setForm({ studentId: '', password: '' }) }}>
-              Check another
+              Go Back
             </button>
           </div>
         ) : (

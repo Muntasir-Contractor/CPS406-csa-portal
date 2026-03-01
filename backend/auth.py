@@ -1,4 +1,5 @@
 import hashlib
+import hmac
 import os
 
 _ITERATIONS = 260_000
@@ -28,4 +29,4 @@ def verify_password(password: str, stored_hash: str) -> bool:
 
 def hmac_compare(a: str, b: str) -> bool:
     """Constant-time string comparison to prevent timing attacks."""
-    return hashlib.compare_digest(a, b)
+    return hmac.compare_digest(a, b)

@@ -1,7 +1,7 @@
 import sqlite3
 from auth import hash_password, verify_password
 
-CONN = "backend\db\csa.db"
+CONN = "db\csa.db"
 
 def student_application_exists(id):
     conn = sqlite3.connect(CONN)

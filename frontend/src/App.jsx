@@ -9,6 +9,7 @@ import CheckStatus from './pages/CheckStatus'
 function Home() {
   const [form, setForm] = useState({ name: '', studentId: '', email: '', password: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [duplicate, setDuplicate] = useState(false)
   const [error, setError] = useState('')
 
   function handleChange(e) {
@@ -18,6 +19,7 @@ function Home() {
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+    setDuplicate(false)
     try {
       const res = await fetch('http://localhost:8000/studentapplication', {
         method: 'POST',
@@ -29,6 +31,10 @@ function Home() {
           password: form.password,
         }),
       })
+      if (res.status === 409) {
+        setDuplicate(true)
+        return
+      }
       if (!res.ok) {
         const data = await res.json()
         setError(data.detail || 'Submission failed. Please try again.')
@@ -51,7 +57,7 @@ function Home() {
             <p><strong>Student ID:</strong> {form.studentId}</p>
             <p><strong>Email:</strong> {form.email}</p>
             <p>You can check your application status using your Student ID and password.</p>
-            <button className="btn-secondary" onClick={() => { setSubmitted(false); setForm({ name: '', studentId: '', email: '', password: '' }) }}>Submit another</button>
+            <button className="btn-secondary" onClick={() => { setSubmitted(false); setForm({ name: '', studentId: '', email: '', password: '' }) }}>Go Back</button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="submission-form">
@@ -105,6 +111,12 @@ function Home() {
               required
             />
 
+            {duplicate && (
+              <div className="field-error">
+                An application for this Student ID already exists.{' '}
+                <Link to="/check-status">Check your application status</Link>
+              </div>
+            )}
             {error && <span className="field-error">{error}</span>}
             <button type="submit" className="btn-primary">Submit</button>
           </form>
