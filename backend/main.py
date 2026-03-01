@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 origins = [
@@ -19,3 +20,13 @@ app.add_middleware(
 @app.get("/")
 def root():
     return {"Hello": "World"}
+
+class SubmissionApplication(BaseModel):
+    student_name: str
+    student_id: str
+    email_address: str
+
+@app.post("/studentapplication")
+def student_application(data : SubmissionApplication):
+    """ Check if there already exists in db""""
+    return {"message": "Application Successful"}
