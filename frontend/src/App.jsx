@@ -5,6 +5,7 @@ import StudentLogin from './pages/StudentLogin'
 import CoordinatorLogin from './pages/CoordinatorLogin'
 import EmployerLogin from './pages/EmployerLogin'
 import CheckStatus from './pages/CheckStatus'
+import CoordinatorDashboard from './pages/CoordinatorDashboard'
 
 function Home() {
   const [form, setForm] = useState({ name: '', studentId: '', email: '', password: '' })
@@ -152,6 +153,7 @@ function App() {
         <Route path="/coordinator-login" element={<CoordinatorLogin />} />
         <Route path="/employer-login" element={<EmployerLogin />} />
         <Route path="/check-status" element={<CheckStatus />} />
+        <Route path="/coordinator-dashboard" element={<CoordinatorDashboard />} />
       </Routes>
     </BrowserRouter>
   )

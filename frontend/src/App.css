@@ -189,3 +189,84 @@
 .back-link:hover {
   color: #1a1a1a;
 }
+
+/* Coordinator dashboard */
+.dashboard-page {
+  min-height: 100vh;
+  padding: 100px 32px 40px;
+  background-color: #f5f5f5;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.applications-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: #1a1a1a;
+}
+
+.applications-table th {
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #555;
+  border-bottom: 2px solid #eee;
+  white-space: nowrap;
+}
+
+.applications-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.applications-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.action-btn {
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s ease;
+}
+
+.action-btn:hover {
+  opacity: 0.85;
+}
+
+.accept-btn {
+  background-color: #16a34a;
+  color: #fff;
+}
+
+.reject-btn {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+/* Application status colours (used in CheckStatus) */
+.status-pending  { color: #b45309; }
+.status-accepted { color: #15803d; }
+.status-rejected { color: #b91c1c; }

@@ -34,6 +34,10 @@ class StatusCheck(BaseModel):
     student_id: str
     password: str
 
+class CoordinatorCredentials(BaseModel):
+    email: str
+    password: str
+
 @app.post("/studentapplication")
 def student_application(data: SubmissionApplication):
     if dbfuncs.student_application_exists(data.student_id):
@@ -47,3 +51,25 @@ def check_application_status(data: StatusCheck):
     if result is None:
         raise HTTPException(status_code=404, detail="No application found for the provided student ID and password")
     return {"student_id": data.student_id, **result}
+
+@app.post("/coordinator/login")
+def coordinator_login(data: CoordinatorCredentials):
+    name = dbfuncs.coordinator_login(data.email, data.password)
+    if name is None:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    return {"name": name, "email": data.email}
+
+@app.get("/applications")
+def get_applications():
+    return dbfuncs.get_all_applications()
+
+@app.post("/studentapplication/{student_id}/accept")
+def accept_student(student_id: int):
+    if not dbfuncs.accept_student(student_id):
+        raise HTTPException(status_code=404, detail="Student application not found")
+    return {"message": "Student accepted"}
+
+@app.post("/studentapplication/{student_id}/reject")
+def reject_student(student_id: int):
+    dbfuncs.reject_student(student_id)
+    return {"message": "Student rejected"}
