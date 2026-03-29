@@ -28,6 +28,7 @@ function CoordinatorLogin() {
       }
       sessionStorage.setItem('coordinatorName', data.name)
       sessionStorage.setItem('coordinatorEmail', data.email)
+      sessionStorage.setItem('lastActivity', Date.now().toString())
       navigate('/coordinator-dashboard')
     } catch {
       setError('Could not reach the server. Please try again later.')
