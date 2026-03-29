@@ -4,7 +4,7 @@ import secrets
 from datetime import datetime, timedelta
 from auth import hash_password, verify_password
 
-CONN = os.path.join(os.path.dirname(__file__), "db", "csa.db")
+CONN = os.environ.get("DB_PATH", os.path.join(os.path.dirname(__file__), "db", "csa.db"))
 
 def get_conn():
     conn = sqlite3.connect(CONN)

@@ -53,12 +53,12 @@ function CoordinatorDashboard() {
     setLoading(true)
     try {
       const [appRes, empRes, repRes, evalRes, auditRes, dlRes] = await Promise.all([
-        fetch('http://localhost:8000/applications'),
-        fetch('http://localhost:8000/employers'),
-        fetch('http://localhost:8000/reports'),
-        fetch('http://localhost:8000/evaluations'),
-        fetch('http://localhost:8000/audit-log'),
-        fetch('http://localhost:8000/deadlines'),
+        fetch('${import.meta.env.VITE_API_URL}/applications'),
+        fetch('${import.meta.env.VITE_API_URL}/employers'),
+        fetch('${import.meta.env.VITE_API_URL}/reports'),
+        fetch('${import.meta.env.VITE_API_URL}/evaluations'),
+        fetch('${import.meta.env.VITE_API_URL}/audit-log'),
+        fetch('${import.meta.env.VITE_API_URL}/deadlines'),
       ])
       setApplications(await appRes.json())
       setEmployers(await empRes.json())
@@ -76,7 +76,7 @@ function CoordinatorDashboard() {
   async function handleAction(studentId, action) {
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch(`http://localhost:8000/studentapplication/${studentId}/${action}`, { method: 'POST' })
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/studentapplication/${studentId}/${action}`, { method: 'POST' })
       const data = await res.json()
       if (!res.ok) { setActionError(data.detail || 'Action failed.'); return }
       setActionMsg(data.message)
@@ -87,7 +87,7 @@ function CoordinatorDashboard() {
   async function handleFinalize(studentId) {
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch(`http://localhost:8000/studentapplication/${studentId}/finalize`, { method: 'POST' })
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/studentapplication/${studentId}/finalize`, { method: 'POST' })
       const data = await res.json()
       if (!res.ok) { setActionError(data.detail || 'Failed.'); return }
       setActionMsg(data.message)
@@ -98,7 +98,7 @@ function CoordinatorDashboard() {
   async function handleApproveEmployer(empId) {
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch(`http://localhost:8000/employer/${empId}/approve`, { method: 'POST' })
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/employer/${empId}/approve`, { method: 'POST' })
       const data = await res.json()
       if (!res.ok) { setActionError(data.detail || 'Failed.'); return }
       setActionMsg(data.message)
@@ -110,7 +110,7 @@ function CoordinatorDashboard() {
     e.preventDefault()
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch('http://localhost:8000/reminder', {
+      const res = await fetch('${import.meta.env.VITE_API_URL}/reminder', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: parseInt(reminderStudentId), message: reminderMessage }),
@@ -127,7 +127,7 @@ function CoordinatorDashboard() {
     e.preventDefault()
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch('http://localhost:8000/deadline', {
+      const res = await fetch('${import.meta.env.VITE_API_URL}/deadline', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ work_term: dlWorkTerm, deadline_date: dlDate }),
@@ -145,7 +145,7 @@ function CoordinatorDashboard() {
     e.preventDefault()
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch('http://localhost:8000/assignment', {
+      const res = await fetch('${import.meta.env.VITE_API_URL}/assignment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: parseInt(assignStudentId), employer_id: parseInt(assignEmployerId), work_term: assignWorkTerm }),
@@ -162,7 +162,7 @@ function CoordinatorDashboard() {
   async function handleFetchStudentsWithout(e) {
     e.preventDefault()
     try {
-      const res = await fetch(`http://localhost:8000/students-without-reports/${bulkWorkTerm}`)
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/students-without-reports/${bulkWorkTerm}`)
       setStudentsWithout(await res.json())
     } catch { setActionError('Could not fetch.') }
   }
@@ -170,7 +170,7 @@ function CoordinatorDashboard() {
   async function handleBulkReminder() {
     setActionError(''); setActionMsg('')
     for (const s of studentsWithout) {
-      await fetch('http://localhost:8000/reminder', {
+      await fetch('${import.meta.env.VITE_API_URL}/reminder', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: s.student_id, message: `Reminder: Please submit your work-term report for ${bulkWorkTerm}.` }),
@@ -359,7 +359,7 @@ function CoordinatorDashboard() {
                           <td>
                             {ev.pdf_path ? (
                               <a
-                                href={`http://localhost:8000/uploads/${ev.pdf_path.split(/[/\\]/).pop()}`}
+                                href={`${import.meta.env.VITE_API_URL}/uploads/${ev.pdf_path.split(/[/\\]/).pop()}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{ color: '#2563eb', fontWeight: '600', fontSize: '12px', textDecoration: 'underline', cursor: 'pointer' }}

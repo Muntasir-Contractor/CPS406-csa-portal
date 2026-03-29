@@ -18,7 +18,7 @@ function EmployerLogin() {
     setError('')
     setLoading(true)
     try {
-      const res = await fetch('http://localhost:8000/employer/login', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/employer/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: form.email, password: form.password }),
@@ -47,7 +47,7 @@ function EmployerLogin() {
     e.preventDefault()
     setVerifyMsg('')
     try {
-      const res = await fetch(`http://localhost:8000/employer/verify-email?token=${verifyToken}`, { method: 'POST' })
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/employer/verify-email?token=${verifyToken}`, { method: 'POST' })
       const data = await res.json()
       if (!res.ok) {
         setVerifyMsg(data.detail || 'Verification failed.')

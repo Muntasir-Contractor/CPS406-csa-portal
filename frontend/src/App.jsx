@@ -38,7 +38,7 @@ function Home() {
     if (pwErr) { setError(pwErr); return }
 
     try {
-      const res = await fetch('http://localhost:8000/studentapplication', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/studentapplication`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

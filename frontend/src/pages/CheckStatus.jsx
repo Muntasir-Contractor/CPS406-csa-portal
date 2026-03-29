@@ -23,7 +23,7 @@ function CheckStatus() {
     setResult(null)
     setLoading(true)
     try {
-      const res = await fetch('http://localhost:8000/studentapplication/status', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/studentapplication/status`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: form.studentId, password: form.password }),

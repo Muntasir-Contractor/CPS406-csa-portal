@@ -27,14 +27,14 @@ function EmployerDashboard() {
 
   async function fetchStudents() {
     try {
-      const res = await fetch(`http://localhost:8000/employer/${employerId}/students`)
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/employer/${employerId}/students`)
       setStudents(await res.json())
     } catch { /* ignore */ }
   }
 
   async function fetchEvaluations() {
     try {
-      const res = await fetch('http://localhost:8000/evaluations')
+      const res = await fetch('${import.meta.env.VITE_API_URL}/evaluations')
       const all = await res.json()
       setEvaluations(all.filter(e => e.employer_id === parseInt(employerId)))
     } catch { /* ignore */ }
@@ -54,7 +54,7 @@ function EmployerDashboard() {
       formData.append('work_term', evalForm.workTerm)
       formData.append('file', evalFile)
       try {
-        const res = await fetch('http://localhost:8000/evaluation/submit-pdf', { method: 'POST', body: formData })
+        const res = await fetch('${import.meta.env.VITE_API_URL}/evaluation/submit-pdf', { method: 'POST', body: formData })
         const data = await res.json()
         if (!res.ok) { setError(data.detail || 'Submission failed.'); return }
         setMessage(data.message)
@@ -62,7 +62,7 @@ function EmployerDashboard() {
       } catch { setError('Could not reach the server.') }
     } else {
       try {
-        const res = await fetch('http://localhost:8000/evaluation/submit', {
+        const res = await fetch('${import.meta.env.VITE_API_URL}/evaluation/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -89,7 +89,7 @@ function EmployerDashboard() {
     e.preventDefault()
     setError(''); setMessage('')
     try {
-      const res = await fetch('http://localhost:8000/placement-rejection', {
+      const res = await fetch('${import.meta.env.VITE_API_URL}/placement-rejection', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

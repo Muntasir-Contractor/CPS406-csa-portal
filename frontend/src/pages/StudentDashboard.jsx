@@ -24,14 +24,14 @@ function StudentDashboard() {
 
   async function fetchReports() {
     try {
-      const res = await fetch(`http://localhost:8000/student/${studentId}/reports`)
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/student/${studentId}/reports`)
       setReports(await res.json())
     } catch { /* ignore */ }
   }
 
   async function fetchReminders() {
     try {
-      const res = await fetch(`http://localhost:8000/student/${studentId}/reminders`)
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/student/${studentId}/reminders`)
       setReminders(await res.json())
     } catch { /* ignore */ }
   }
@@ -52,7 +52,7 @@ function StudentDashboard() {
     formData.append('file', file)
 
     try {
-      const res = await fetch('http://localhost:8000/student/upload-report', {
+      const res = await fetch('${import.meta.env.VITE_API_URL}/student/upload-report', {
         method: 'POST',
         body: formData,
       })

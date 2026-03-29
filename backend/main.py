@@ -8,11 +8,7 @@ import dbfuncs
 import re
 
 app = FastAPI()
-origins = [
-    "http://localhost:3000",
-    "http://localhost:5174",
-    "http://localhost:5173",
-]
+origins = os.environ.get("CORS_ORIGINS", "http://localhost:3000,http://localhost:5174,http://localhost:5173").split(",")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -22,7 +18,7 @@ app.add_middleware(
 )
 
 # Create uploads directory
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+UPLOAD_DIR = os.environ.get("UPLOAD_DIR", os.path.join(os.path.dirname(__file__), "uploads"))
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 

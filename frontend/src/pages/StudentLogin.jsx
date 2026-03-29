@@ -16,7 +16,7 @@ function StudentLogin() {
     setError('')
     setLoading(true)
     try {
-      const res = await fetch('http://localhost:8000/student/login', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/student/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: form.studentId, password: form.password }),
