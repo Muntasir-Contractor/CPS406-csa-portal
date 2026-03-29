@@ -344,7 +344,7 @@ function CoordinatorDashboard() {
               evaluations.length === 0 ? <p style={{ color: '#555', fontSize: '14px' }}>No evaluations submitted yet.</p> : (
                 <div style={{ overflowX: 'auto' }}>
                   <table className="applications-table">
-                    <thead><tr><th>ID</th><th>Student ID</th><th>Student</th><th>Work Term</th><th>Submitted By</th><th>Company</th><th>Submitted</th><th>Type</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Student ID</th><th>Student</th><th>Work Term</th><th>Submitted By</th><th>Company</th><th>Submitted</th><th>Type</th><th>View</th></tr></thead>
                     <tbody>
                       {evaluations.map(ev => (
                         <tr key={ev.id}>
@@ -356,6 +356,18 @@ function CoordinatorDashboard() {
                           <td>{ev.company_name || '—'}</td>
                           <td>{formatDate(ev.submitted_at)}</td>
                           <td>{ev.pdf_path ? 'PDF' : 'Form'}</td>
+                          <td>
+                            {ev.pdf_path ? (
+                              <a
+                                href={`http://localhost:8000/uploads/${ev.pdf_path.split(/[/\\]/).pop()}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#2563eb', fontWeight: '600', fontSize: '12px', textDecoration: 'underline', cursor: 'pointer' }}
+                              >
+                                View PDF
+                              </a>
+                            ) : '—'}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
