@@ -52,7 +52,7 @@ function StudentDashboard() {
     formData.append('file', file)
 
     try {
-      const res = await fetch('${import.meta.env.VITE_API_URL}/student/upload-report', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/student/upload-report`, {
         method: 'POST',
         body: formData,
       })

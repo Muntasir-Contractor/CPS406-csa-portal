@@ -53,12 +53,12 @@ function CoordinatorDashboard() {
     setLoading(true)
     try {
       const [appRes, empRes, repRes, evalRes, auditRes, dlRes] = await Promise.all([
-        fetch('${import.meta.env.VITE_API_URL}/applications'),
-        fetch('${import.meta.env.VITE_API_URL}/employers'),
-        fetch('${import.meta.env.VITE_API_URL}/reports'),
-        fetch('${import.meta.env.VITE_API_URL}/evaluations'),
-        fetch('${import.meta.env.VITE_API_URL}/audit-log'),
-        fetch('${import.meta.env.VITE_API_URL}/deadlines'),
+        fetch(`${import.meta.env.VITE_API_URL}/applications`),
+        fetch(`${import.meta.env.VITE_API_URL}/employers`),
+        fetch(`${import.meta.env.VITE_API_URL}/reports`),
+        fetch(`${import.meta.env.VITE_API_URL}/evaluations`),
+        fetch(`${import.meta.env.VITE_API_URL}/audit-log`),
+        fetch(`${import.meta.env.VITE_API_URL}/deadlines`),
       ])
       setApplications(await appRes.json())
       setEmployers(await empRes.json())
