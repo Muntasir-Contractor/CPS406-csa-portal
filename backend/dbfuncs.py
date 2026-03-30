@@ -15,7 +15,53 @@ def init_db():
     conn = get_conn()
     cursor = conn.cursor()
 
-    # Add columns to student_application if missing
+    # Student application table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS student_application (
+            student_id INTEGER PRIMARY KEY,
+            full_name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            password TEXT NOT NULL,
+            status TEXT DEFAULT 'pending',
+            submitted_at TEXT,
+            status_updated_at TEXT,
+            is_finalized INTEGER DEFAULT 0,
+            failed_login_attempts INTEGER DEFAULT 0,
+            locked_until TEXT
+        )
+    """)
+
+    # Coordinator table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS coordinator (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            failed_login_attempts INTEGER DEFAULT 0,
+            locked_until TEXT
+        )
+    """)
+
+    # Seed default coordinator if table is empty
+    cursor.execute("SELECT COUNT(*) FROM coordinator")
+    if cursor.fetchone()[0] == 0:
+        cursor.execute(
+            "INSERT INTO coordinator (name, email, password) VALUES (?, ?, ?)",
+            ("Admin", "admin@gmail.com", hash_password("root"))
+        )
+
+    # Student login table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS student_login (
+            id INTEGER PRIMARY KEY,
+            password TEXT NOT NULL,
+            failed_login_attempts INTEGER DEFAULT 0,
+            locked_until TEXT
+        )
+    """)
+
+    # Add columns to student_application if missing (for existing DBs)
     cursor.execute("PRAGMA table_info(student_application)")
     cols = [r[1] for r in cursor.fetchall()]
     if "is_finalized" not in cols:
@@ -25,7 +71,7 @@ def init_db():
     if "locked_until" not in cols:
         cursor.execute("ALTER TABLE student_application ADD COLUMN locked_until TEXT")
 
-    # Add columns to coordinator if missing
+    # Add columns to coordinator if missing (for existing DBs)
     cursor.execute("PRAGMA table_info(coordinator)")
     cols = [r[1] for r in cursor.fetchall()]
     if "failed_login_attempts" not in cols:
@@ -33,7 +79,7 @@ def init_db():
     if "locked_until" not in cols:
         cursor.execute("ALTER TABLE coordinator ADD COLUMN locked_until TEXT")
 
-    # Add columns to student_login if missing
+    # Add columns to student_login if missing (for existing DBs)
     cursor.execute("PRAGMA table_info(student_login)")
     cols = [r[1] for r in cursor.fetchall()]
     if "failed_login_attempts" not in cols:
