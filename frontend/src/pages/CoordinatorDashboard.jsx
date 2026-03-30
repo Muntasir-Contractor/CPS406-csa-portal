@@ -110,7 +110,7 @@ function CoordinatorDashboard() {
     e.preventDefault()
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch('${import.meta.env.VITE_API_URL}/reminder', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/reminder`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: parseInt(reminderStudentId), message: reminderMessage }),
@@ -127,7 +127,7 @@ function CoordinatorDashboard() {
     e.preventDefault()
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch('${import.meta.env.VITE_API_URL}/deadline', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/deadline`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ work_term: dlWorkTerm, deadline_date: dlDate }),
@@ -145,7 +145,7 @@ function CoordinatorDashboard() {
     e.preventDefault()
     setActionError(''); setActionMsg('')
     try {
-      const res = await fetch('${import.meta.env.VITE_API_URL}/assignment', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/assignment`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: parseInt(assignStudentId), employer_id: parseInt(assignEmployerId), work_term: assignWorkTerm }),
@@ -170,7 +170,7 @@ function CoordinatorDashboard() {
   async function handleBulkReminder() {
     setActionError(''); setActionMsg('')
     for (const s of studentsWithout) {
-      await fetch('${import.meta.env.VITE_API_URL}/reminder', {
+      await fetch(`${import.meta.env.VITE_API_URL}/reminder`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: s.student_id, message: `Reminder: Please submit your work-term report for ${bulkWorkTerm}.` }),
